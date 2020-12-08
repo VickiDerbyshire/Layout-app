@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#510505"
+    tools:context=".Dashboard">
+
+    <TextView
+        android:id="@+id/titleUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:text="ACCOUNT USER NAME"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="361dp"
+        android:layout_height="450dp"
+        android:layout_marginTop="88dp"
+        app:cardBackgroundColor="#494B55"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleUserName">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/signNow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:layout_marginLeft="52dp"
+                android:layout_marginTop="20dp"
+                android:text="DASHBOARD"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ourLogo"
+                android:layout_width="170dp"
+                android:layout_height="109dp"
+
+                android:layout_marginLeft="105dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/logotitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+            <!-- <Button
+            android:id="@+id/createLayoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="createLayout"
+            android:text="Create Layout" /> -->
+
+            <Button
+                android:id="@+id/selectLayoutBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="selectLayout"
+                android:text="Select Layout" />
+
+            <Button
+                android:id="@+id/TableReseBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="tableReserv"
+                android:text="Table Reservations" />
+
+            <Button
+                android:id="@+id/menuBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="menu"
+                android:text="Menu" />
+
+            <Button
+                android:id="@+id/Orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="orderList"
+                android:text="Order List" />
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

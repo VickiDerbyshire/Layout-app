@@ -1,0 +1,123 @@
+CREATE SCHEMA layoutdb;
+
+CREATE TABLE IF NOT EXISTS `layoutdb`.`Stores` (
+  `idStore` INT NOT NULL AUTO_INCREMENT,
+  `storeName` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idStore`))
+ENGINE = InnoDB
+
+
+CREATE TABLE IF NOT EXISTS `layoutdb`.`Users` (
+  `idUser` INT NOT NULL AUTO_INCREMENT,
+  `idStore` INT NOT NULL,
+  `userType` INT NOT NULL,
+  `userName` VARCHAR(45) NOT NULL,
+  `userEmail` VARCHAR(255) NOT NULL,
+  `userPW` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idUser`),
+  INDEX `FK_StoreID_idx` (`idStore` ASC) VISIBLE,
+  INDEX `FK_UserType_idx` (`userType` ASC) VISIBLE,
+  CONSTRAINT `FK_StoreID_User`
+    FOREIGN KEY (`idStore`)
+    REFERENCES `layoutdb`.`Stores` (`idStore`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_UserType`
+    FOREIGN KEY (`userType`)
+    REFERENCES `layoutdb`.`UserTypes` (`idUserTypes`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+
+CREATE TABLE IF NOT EXISTS `layoutdb`.`Blueprints` (
+  `idBlueprint` INT NOT NULL AUTO_INCREMENT,
+  `idStore` INT NOT NULL,
+  PRIMARY KEY (`idBlueprint`),
+  INDEX `FK_StoreID_idx` (`idStore` ASC) VISIBLE,
+  CONSTRAINT `FK_StoreID_Blueprints`
+    FOREIGN KEY (`idStore`)
+    REFERENCES `layoutdb`.`Stores` (`idStore`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+
+CREATE TABLE IF NOT EXISTS `layoutdb`.`Layouts` (
+  `idLayout` INT NOT NULL AUTO_INCREMENT,
+  `idStore` INT NOT NULL,
+  `isSet` INT NOT NULL,
+  `madeBy` INT NOT NULL,
+  PRIMARY KEY (`idLayout`, `idStore`),
+  INDEX `FK_StoreID_idx` (`idStore` ASC) VISIBLE,
+  INDEX `FK_MadeBy_idx` (`madeBy` ASC) VISIBLE,
+  CONSTRAINT `FK_StoreID_Layouts`
+    FOREIGN KEY (`idStore`)
+    REFERENCES `layoutdb`.`Stores` (`idStore`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_MadeBy`
+    FOREIGN KEY (`madeBy`)
+    REFERENCES `layoutdb`.`Users` (`idUser`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+
+CREATE TABLE IF NOT EXISTS `layoutdb`.`bSegments` (
+  `idSegment` INT NOT NULL AUTO_INCREMENT,
+  `idBlueprint` INT NOT NULL,
+  `segType` VARCHAR(45) NOT NULL,
+  `sX1` DOUBLE NOT NULL,
+  `sY1` DOUBLE NOT NULL,
+  `sX2` DOUBLE NOT NULL,
+  `sY2` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idSegment`, `idBlueprint`),
+  INDEX `FK_BlueprintID_idx` (`idBlueprint` ASC) VISIBLE,
+  CONSTRAINT `FK_BlueprintID`
+    FOREIGN KEY (`idBlueprint`)
+    REFERENCES `layoutdb`.`Blueprints` (`idBlueprint`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+
+CREATE TABLE IF NOT EXISTS `layoutdb`.`lElements` (
+  `idlElement` INT NOT NULL AUTO_INCREMENT,
+  `idLayout` INT NOT NULL,
+  `elementType` VARCHAR(45) NOT NULL,
+  `eX` DOUBLE NOT NULL,
+  `eY` DOUBLE NOT NULL,
+  `eV1` DOUBLE NOT NULL,
+  `eV2` DOUBLE NULL,
+  PRIMARY KEY (`idlElement`),
+  INDEX `FK_LayoutID_idx` (`idLayout` ASC) VISIBLE,
+  CONSTRAINT `FK_LayoutID`
+    FOREIGN KEY (`idLayout`)
+    REFERENCES `layoutdb`.`Layouts` (`idLayout`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+
+
+CREATE TABLE IF NOT EXISTS `layoutdb`.`elementEvent` (
+  `idElementEvent` INT NOT NULL AUTO_INCREMENT,
+  `idStore` INT NOT NULL,
+  `idElement` INT NOT NULL,
+  `eventDateTime` DATETIME NOT NULL,
+  `statusType` VARCHAR(45) NOT NULL,
+  `intLock` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idElementEvent`),
+  INDEX `FK_idStore_event_idx` (`idStore` ASC) VISIBLE,
+  INDEX `FK_idLElement_event_idx` (`idElement` ASC) VISIBLE,
+  CONSTRAINT `FK_idStore_event`
+    FOREIGN KEY (`idStore`)
+    REFERENCES `layoutdb`.`Stores` (`idStore`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_idLElement_event`
+    FOREIGN KEY (`idElement`)
+    REFERENCES `layoutdb`.`lElements` (`idlElement`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
